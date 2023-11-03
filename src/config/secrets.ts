@@ -8,6 +8,5 @@ if (envFound.error) {
 }
 
 const API_KEY = process.env.API_KEY;
-console.log(API_KEY);
 
-// export default API_KEY;
+export default API_KEY;
