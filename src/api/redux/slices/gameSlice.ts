@@ -1,6 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import API_KEY from "../../../config/secrets";
-import { baseQuery } from "../basequery";
+import { baseQueryWithApiKey } from "../basequery";
 
 type Game = {
   // define type here
@@ -8,11 +7,11 @@ type Game = {
 
 export const gameApi = createApi({
   reducerPath: "gamesAPI",
-  baseQuery,
+  baseQuery: baseQueryWithApiKey,
   endpoints: (builder) => ({
     getGameById: builder.query<Game, string>({
       // seems like query arguments must be strings
-      query: (id: string) => `games/${id}?key=${API_KEY}`,
+      query: (id: string) => `games/${id}`,
     }),
   }),
 });

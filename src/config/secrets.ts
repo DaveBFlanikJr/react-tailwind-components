@@ -1,12 +1,11 @@
+import { z } from 'zod';
 import dotenv from "dotenv";
-process.env.NODE_ENV = process.env.NODE_ENV || "development";
 
-const envFound = dotenv.config();
+dotenv.config()
 
-if (envFound.error) {
-  throw new Error(".env folder not found");
-}
+const envSchema = z.object({
+  NODE_ENV: z.enum(["development", "staging", "production"]),
+  API_KEY: z.string().min(1),
+})
 
-const API_KEY = process.env.API_KEY;
-
-export default API_KEY;
+export const env = envSchema.parse(process.env)
