@@ -1,20 +1,20 @@
-// Will hold the redux toolkit logic to manage the state for individual games
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { createSlice } from "@reduxjs/toolkit";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import API_KEY from "../../../config/secrets";
+import { baseQuery } from "../basequery";
 
-const baseUrl: string = `https://api.rawg.io/api/games`;
-const gamesAPIHeader = { "content-type": "application/json" };
-const createRequest = (url: string) => ({ url, headers: gamesAPIHeader });
+type Game = {
+  // define type here
+}
 
-const gameSlice = createSlice({
-  name: "gamesAPI",
-  baseQuery: fetchBaseQuery({ baseUrl }),
-  endpoints: (builder) => {
-    getGame: builder.query({
-      query: (id: number) => createRequest(`games/${id}?key=${API_KEY}`),
-    });
-  },
+const gameSlice = createApi({
+  reducerPath: "gamesAPI",
+  baseQuery,
+  endpoints: (builder) => ({
+    getGameById: builder.query<Game, string>({
+      // seems like query arguments must be strings
+      query: (id: string) => `games/${id}?key=${API_KEY}`,
+    }),
+  }),
 });
 
 export default gameSlice;
