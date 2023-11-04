@@ -1,6 +1,7 @@
 import { fetchBaseQuery } from "@reduxjs/toolkit/query";
 import { env } from "../../config/secrets";
 
+
 export const baseQueryWithApiKey: ReturnType<typeof fetchBaseQuery> = async (
   args,
   api,

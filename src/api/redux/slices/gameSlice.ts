@@ -3,6 +3,12 @@ import { baseQueryWithApiKey } from "../basequery";
 
 type Game = {
   // define type here
+  id: number,
+  title: string,
+  description: string,
+  raiting: number,
+  released: string,
+  image: string
 };
 
 export const gameApi = createApi({
