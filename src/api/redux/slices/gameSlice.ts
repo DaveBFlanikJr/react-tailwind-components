@@ -4,9 +4,9 @@ import { baseQuery } from "../basequery";
 
 type Game = {
   // define type here
-}
+};
 
-const gameSlice = createApi({
+export const gameApi = createApi({
   reducerPath: "gamesAPI",
   baseQuery,
   endpoints: (builder) => ({
@@ -17,4 +17,4 @@ const gameSlice = createApi({
   }),
 });
 
-export default gameSlice;
+export const { useGetGameByIdQuery } = gameApi;
