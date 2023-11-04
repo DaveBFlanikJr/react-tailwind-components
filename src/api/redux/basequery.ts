@@ -1,14 +1,20 @@
 import { fetchBaseQuery } from "@reduxjs/toolkit/query";
+import { env } from "../../config/secrets";
 
-export const baseQuery = fetchBaseQuery({
-  /* you might want to change this to https://api.rawg.io in case it's
-  an external api, otherwise just keep it as /api in case it's something
-  you are hosting yourself */
-  baseUrl: "https://api.rawg.io/api",
-  prepareHeaders: (headers) => {
-    // specifying content type application/json is usually not necessary.
-    // RTK query will infer the content type from your request
-    headers.set("content-type", `application/json`);
-    return headers;
-  },
-});
+
+export const baseQueryWithApiKey: ReturnType<typeof fetchBaseQuery> = async (
+  args,
+  api,
+  extraOptions,
+) => {
+  const baseUrl = "https://api.rawg.io/api";
+  const baseQuery = fetchBaseQuery({ baseUrl });
+
+  const url = typeof args === "string" ? args : args.url;
+  const enhancedUrl = `${url}${url.includes("?") ? "&" : "?"}key=${
+    env.API_KEY
+  }`;
+  const enhancedArgs =
+    typeof args === "string" ? enhancedUrl : { ...args, url: enhancedUrl };
+  return baseQuery(enhancedArgs, api, extraOptions);
+};
